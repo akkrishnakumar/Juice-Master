@@ -4,10 +4,33 @@ class JuiceMaster(
     val subCorridorsPerFloor: Int,
 ) {
 
-    private var status: Nothing = initialize()
+    private var status = initialize()
 
-    fun status(): String = TODO("Need to implement to string method for status")
+    fun status(): String = TODO("Need to implement toString() method for status")
 
-    private fun initialize(): Nothing = TODO("Need to implement initializer")
+    private fun initialize() = Status(
+        (1..floors).map(initializeDefaultFloorStatusUsing(mainCorridorsPerFloor, subCorridorsPerFloor))
+    )
+
+    private fun initializeDefaultFloorStatusUsing(
+        mainCorridorsPerFloor: Int,
+        subCorridorsPerFloor: Int
+    ): (Int) -> Floor = {
+        Floor(
+            it,
+            initializeDefaultMainCorridorUsing(mainCorridorsPerFloor),
+            initializeDefaultSubCorridorUsing(subCorridorsPerFloor)
+        )
+    }
+
+    private fun initializeDefaultMainCorridorUsing(mainCorridorsPerFloor: Int): List<MainCorridor> =
+        (1..mainCorridorsPerFloor).map {
+            MainCorridor(it, light = true, ac = true)
+        }
+
+    private fun initializeDefaultSubCorridorUsing(subCorridorsPerFloor: Int): List<SubCorridor> =
+        (1..subCorridorsPerFloor).map {
+            SubCorridor(it, light = false, ac = true)
+        }
 
 }
