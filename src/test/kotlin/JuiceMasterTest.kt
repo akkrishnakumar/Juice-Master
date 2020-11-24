@@ -4,11 +4,13 @@ import org.junit.jupiter.api.Test
 
 class JuiceMasterTest {
 
+    val juiceMaster = JuiceMaster(2, 1, 2)
+
     @Test
     internal fun `should switch on all main corridor light during night shift`() {
         val expectedStatus = sampleDefaultStatusAtNightShift
 
-        val actualStatus = TODO("Need to implement Juice Master")
+        val actualStatus = juiceMaster.status()
 
         assertThat(actualStatus, equalTo(expectedStatus))
     }
