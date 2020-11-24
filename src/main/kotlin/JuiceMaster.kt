@@ -1,7 +1,11 @@
+import java.time.LocalTime
+import java.time.LocalTime.now
+
 class JuiceMaster(
     val floors: Int,
     val mainCorridorsPerFloor: Int,
     val subCorridorsPerFloor: Int,
+    val isNightShift: (LocalTime) -> Boolean = TODO("Need to implement night shift")
 ) {
 
     private var status = initialize()
@@ -25,7 +29,7 @@ class JuiceMaster(
 
     private fun initializeDefaultMainCorridorUsing(mainCorridorsPerFloor: Int): List<MainCorridor> =
         (1..mainCorridorsPerFloor).map {
-            MainCorridor(it, light = true, ac = true)
+            MainCorridor(it, light = isNightShift(now()), ac = true)
         }
 
     private fun initializeDefaultSubCorridorUsing(subCorridorsPerFloor: Int): List<SubCorridor> =
