@@ -19,8 +19,11 @@ class JuiceMasterTest {
     @Test
     internal fun `should switch off all main corridor light during morning shift`() {
         val expectedStatus = sampleDefaultStatusAtMorningShift
+        val isMorningShift: NightShift = { false }
+        val juiceMasterWithMorningShift =
+            JuiceMaster(2, 1, 2, isNightShift = isMorningShift)
 
-        val actualStatus = juiceMaster.status()
+        val actualStatus = juiceMasterWithMorningShift.status()
 
         assertThat(actualStatus, equalTo(expectedStatus))
     }
