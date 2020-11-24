@@ -1,11 +1,10 @@
-import java.time.LocalTime
 import java.time.LocalTime.now
 
 class JuiceMaster(
     val floors: Int,
     val mainCorridorsPerFloor: Int,
     val subCorridorsPerFloor: Int,
-    val isNightShift: (LocalTime) -> Boolean = TODO("Need to implement night shift")
+    val isNightShift: NightShift = DefaultNightShift()
 ) {
 
     private var status = initialize()

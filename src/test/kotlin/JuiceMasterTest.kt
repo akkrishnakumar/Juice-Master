@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Test
 
 class JuiceMasterTest {
 
-    val juiceMaster = JuiceMaster(2, 1, 2)
+    val isNightShift: NightShift = { true }
+    val juiceMaster = JuiceMaster(2, 1, 2, isNightShift = isNightShift)
 
     @Test
     internal fun `should switch on all main corridor light during night shift`() {
