@@ -7,6 +7,9 @@ class DefaultConsoleApp(
 ) : ConsoleApp(outputStream) {
 
     fun run() {
+
+        // Put Business Scenario here
+
         printOutput("Yet to be implemented")
     }
 
