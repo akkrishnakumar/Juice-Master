@@ -3,14 +3,23 @@ sealed class ConsoleApp(val outputStream: (String) -> Unit) {
 }
 
 class DefaultConsoleApp(
-    outputStream: (String) -> Unit = ::consoleOutputStream
+    outputStream: (String) -> Unit = ::consoleOutputStream,
+    val isNightShift: NightShift = DefaultNightShift()
 ) : ConsoleApp(outputStream) {
 
-    fun run() {
+    val juiceMaster = JuiceMaster(
+        2,
+        1,
+        2,
+        isNightShift = isNightShift
+    )
 
+    fun run() {
         // Put Business Scenario here
 
-        printOutput("Yet to be implemented")
+        // During Night Shift
+        // 1. Initialize and print default status
+        printOutput(juiceMaster.status())
     }
 
 }

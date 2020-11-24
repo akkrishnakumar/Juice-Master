@@ -10,13 +10,16 @@ class ConsoleAppTest {
         private val consoleQueue = ArrayDeque<String>()
         private fun consoleOutputStream(output: String) = consoleQueue.addLast(output)
 
-        private val consoleApp = DefaultConsoleApp(::consoleOutputStream)
+        private val consoleApp =
+            DefaultConsoleApp(
+                outputStream = ::consoleOutputStream,
+                isNightShift = { true }
+            )
 
         @BeforeAll
         @JvmStatic
         internal fun `Run Console App`() {
             consoleApp.run()
-
         }
     }
 
