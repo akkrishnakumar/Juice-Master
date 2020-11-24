@@ -6,7 +6,7 @@ class JuiceMaster(
 
     private var status = initialize()
 
-    fun status(): String = TODO("Need to implement toString() method for status")
+    fun status(): String = status.toHumanReadable()
 
     private fun initialize() = Status(
         (1..floors).map(initializeDefaultFloorStatusUsing(mainCorridorsPerFloor, subCorridorsPerFloor))
