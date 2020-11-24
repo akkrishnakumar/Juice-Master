@@ -5,6 +5,7 @@ import org.junit.jupiter.params.provider.Arguments.of
 import org.junit.jupiter.params.provider.MethodSource
 import java.time.LocalTime
 import java.time.LocalTime.MIDNIGHT
+import java.time.LocalTime.NOON
 
 class NightShiftTest {
 
@@ -20,6 +21,15 @@ class NightShiftTest {
         assertThat(actual, equalTo(expected))
     }
 
+    @ParameterizedTest
+    @MethodSource("morningShiftTimings")
+    internal fun `should return false if in morning shift`(time: LocalTime) {
+        val expected = false
+
+        val actual = isNightShift(time)
+
+        assertThat(actual, equalTo(expected))
+    }
 
     companion object {
 
@@ -28,6 +38,13 @@ class NightShiftTest {
             of(MIDNIGHT),
             of(LocalTime.parse("18:00:01")),
             of(LocalTime.parse("05:59:59"))
+        )
+
+        @JvmStatic
+        fun morningShiftTimings() = listOf(
+            of(NOON),
+            of(LocalTime.parse("17:59:59")),
+            of(LocalTime.parse("06:00:01"))
         )
     }
 
