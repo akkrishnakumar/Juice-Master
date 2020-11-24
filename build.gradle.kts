@@ -11,6 +11,7 @@ repositories {
 dependencies {
 
     testImplementation(kotlin("test-junit5"))
+    testImplementation("org.junit.jupiter", "junit-jupiter-params", "5.0.0")
     testImplementation("com.natpryce", "hamkrest", "1.4.2.0")
 
 }
