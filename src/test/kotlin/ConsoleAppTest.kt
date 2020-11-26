@@ -23,11 +23,38 @@ class ConsoleAppTest {
 
     }
 
+    @Test
+    internal fun `Juice Master will receive motion sensor signal and turn on light accordingly`() {
+        val expectedStatus = statusAfterMotionDetected
+
+        val actualStatus = consoleApp.consume(sampleMotionSignal)
+
+        assertThat(actualStatus, equalTo(expectedStatus))
+    }
+
     val defaultStatus = """
         Floor 1
         Main corridor 1 Light 1 : ON AC : ON
         Sub corridor 1 Light 1 : OFF AC : ON
         Sub corridor 2 Light 2 : OFF AC : ON
+        Floor 2
+        Main corridor 1 Light 1 : ON AC : ON
+        Sub corridor 1 Light 1 : OFF AC : ON
+        Sub corridor 2 Light 2 : OFF AC : ON
+    """.trimIndent()
+
+    val sampleMotionSignal = """
+        {
+          "floor": "1",
+          "number": "2"
+        }
+    """.trimIndent()
+
+    val statusAfterMotionDetected = """
+        Floor 1
+        Main corridor 1 Light 1 : ON AC : ON
+        Sub corridor 1 Light 1 : OFF AC : OFF
+        Sub corridor 2 Light 2 : ON AC : ON
         Floor 2
         Main corridor 1 Light 1 : ON AC : ON
         Sub corridor 1 Light 1 : OFF AC : ON

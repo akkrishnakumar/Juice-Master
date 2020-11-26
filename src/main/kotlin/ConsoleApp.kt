@@ -16,6 +16,8 @@ class DefaultConsoleApp(
 
     fun status() = printOutput(juiceMaster.status())
 
+    fun consume(signal: String): Unit = juiceMaster.consume(signal)
+
 }
 
 fun consoleOutputStream(output: String) = println(output)

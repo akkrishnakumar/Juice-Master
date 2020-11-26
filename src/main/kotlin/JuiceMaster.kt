@@ -36,4 +36,6 @@ class JuiceMaster(
             SubCorridor(it, light = false, ac = true)
         }
 
+    fun consume(signal: String): Unit = TODO("Need to implement signal interpreter")
+
 }
