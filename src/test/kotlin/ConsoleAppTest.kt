@@ -1,33 +1,22 @@
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 
 class ConsoleAppTest {
 
-    companion object {
+    private val consoleQueue = ArrayDeque<String>()
+    private fun consoleOutputStream(output: String) = consoleQueue.addLast(output)
 
-        private val consoleQueue = ArrayDeque<String>()
-        private fun consoleOutputStream(output: String) = consoleQueue.addLast(output)
-
-        private val consoleApp =
-            DefaultConsoleApp(
-                outputStream = ::consoleOutputStream,
-                isNightShift = { true }
-            )
-
-        @BeforeAll
-        @JvmStatic
-        internal fun `Run Console App`() {
-            consoleApp.run()
-        }
-    }
-
+    private val consoleApp = DefaultConsoleApp(
+        outputStream = ::consoleOutputStream,
+        isNightShift = { true }
+    )
 
     @Test
     internal fun `Juice Master should initiate and return default status`() {
         val expectedStatus = defaultStatus
 
+        consoleApp.status()
         val actualStatus = consoleQueue[0]
 
         assertThat(actualStatus, equalTo(expectedStatus))

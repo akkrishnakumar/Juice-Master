@@ -14,13 +14,7 @@ class DefaultConsoleApp(
         isNightShift = isNightShift
     )
 
-    fun run() {
-        // Put Business Scenario here
-
-        // During Night Shift
-        // 1. Initialize and print default status
-        printOutput(juiceMaster.status())
-    }
+    fun status() = printOutput(juiceMaster.status())
 
 }
 
