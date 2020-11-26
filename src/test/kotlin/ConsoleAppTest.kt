@@ -43,13 +43,6 @@ class ConsoleAppTest {
         Sub corridor 2 Light 2 : OFF AC : ON
     """.trimIndent()
 
-    val sampleMotionSignal = """
-        {
-          "floor": "1",
-          "number": "2"
-        }
-    """.trimIndent()
-
     val statusAfterMotionDetected = """
         Floor 1
         Main corridor 1 Light 1 : ON AC : ON

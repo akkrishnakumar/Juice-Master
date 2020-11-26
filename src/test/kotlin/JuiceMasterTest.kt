@@ -28,6 +28,16 @@ class JuiceMasterTest {
         assertThat(actualStatus, equalTo(expectedStatus))
     }
 
+    @Test
+    internal fun `should switch on light in sub corridor during night shift when motion is detected`() {
+        val expectedStatus = sampleStatusAtNightShiftWhenMotionDetected
+
+        juiceMaster.consume(sampleMotionSignal)
+        val actualStatus = juiceMaster.status()
+
+        assertThat(actualStatus, equalTo(expectedStatus))
+    }
+
     val sampleDefaultStatusAtNightShift = """
         Floor 1
         Main corridor 1 Light 1 : ON AC : ON
@@ -46,6 +56,17 @@ class JuiceMasterTest {
         Sub corridor 2 Light 2 : OFF AC : ON
         Floor 2
         Main corridor 1 Light 1 : OFF AC : ON
+        Sub corridor 1 Light 1 : OFF AC : ON
+        Sub corridor 2 Light 2 : OFF AC : ON
+    """.trimIndent()
+
+    val sampleStatusAtNightShiftWhenMotionDetected = """
+        Floor 1
+        Main corridor 1 Light 1 : ON AC : ON
+        Sub corridor 1 Light 1 : OFF AC : ON
+        Sub corridor 2 Light 2 : ON AC : ON
+        Floor 2
+        Main corridor 1 Light 1 : ON AC : ON
         Sub corridor 1 Light 1 : OFF AC : ON
         Sub corridor 2 Light 2 : OFF AC : ON
     """.trimIndent()
