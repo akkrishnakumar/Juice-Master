@@ -8,6 +8,12 @@ class DefaultSignalInterpreter : SignalInterpreter {
     private val mapper = jacksonObjectMapper()
 
     override fun invoke(signal: String): Result<Error, MotionDetected> =
-        Success(mapper.readValue(signal))
+        try {
+            Success(mapper.readValue(signal))
+        } catch (e: Exception) {
+            Failure(InvalidSignalInput)
+        }
 
 }
+
+object InvalidSignalInput : Error

@@ -16,4 +16,14 @@ class SignalInterpreterTest {
         assertThat(actualSignal, equalTo(expectedSignalObject))
     }
 
+    @Test
+    internal fun `should return failure when invalid raw signal is received`() {
+        val expectedFailureOutput = InvalidSignalInput
+        val inputSignal = "Some Gibberish"
+
+        val actualOutput = signalInterpreter(inputSignal).isFailure()
+
+        assertThat(actualOutput, equalTo(expectedFailureOutput))
+    }
+
 }
