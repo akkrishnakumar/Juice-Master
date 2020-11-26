@@ -10,10 +10,9 @@ class InstructionProcessorTest {
     internal fun `should turn on lights in sub corridor when motion is detected`() {
         val expectedStatus = sampleUpdatedStatus
         val initialStatus = defaultStatus()
-        val inputSignal = sampleMotionDetectedSignal
+        val inputSignal = MotionDetected(1, 2, initialStatus)
 
-        val updateFunc = statusUpdater(inputSignal)
-        val actualStatus = updateFunc(initialStatus)
+        val actualStatus = statusUpdater(inputSignal)
 
         assertThat(actualStatus, equalTo(expectedStatus))
     }
@@ -22,15 +21,12 @@ class InstructionProcessorTest {
     internal fun `should turn off all ACs on adjacent sub corridors if consumption goes out of budget`() {
         val expectedStatus = sampleBudgetedStatus
         val initialStatus = defaultStatus()
-        val inputSignal = sampleMotionDetectedSignal
+        val inputSignal = MotionDetected(1, 2, initialStatus)
 
-        val updateFunc = statusUpdater(inputSignal)
-        val actualStatus = updateFunc(initialStatus)
+        val actualStatus = statusUpdater(inputSignal)
 
         assertThat(actualStatus, equalTo(expectedStatus))
     }
-
-    private val sampleMotionDetectedSignal = MotionDetected(1, 2)
 
     private val sampleUpdatedStatus = Status(
         listOf(
