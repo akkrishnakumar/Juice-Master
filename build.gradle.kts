@@ -10,6 +10,8 @@ repositories {
 }
 dependencies {
 
+    implementation("com.fasterxml.jackson.module", "jackson-module-kotlin", "2.9.8")
+
     testImplementation(kotlin("test-junit5"))
     testImplementation("org.junit.jupiter", "junit-jupiter-params", "5.0.0")
     testImplementation("com.natpryce", "hamkrest", "1.4.2.0")
