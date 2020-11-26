@@ -1,0 +1,1 @@
+data class Signal(val floor: Int, val number: Int)
