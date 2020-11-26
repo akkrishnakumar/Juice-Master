@@ -18,6 +18,18 @@ class StatusUpdaterTest {
         assertThat(actualStatus, equalTo(expectedStatus))
     }
 
+    @Test
+    internal fun `should turn off all ACs on adjacent sub corridors if consumption goes out of budget`() {
+        val expectedStatus = sampleBudgetedStatus
+        val initialStatus = defaultStatus()
+        val inputSignal = sampleMotionDetectedSignal
+
+        val updateFunc = statusUpdater(inputSignal)
+        val actualStatus = updateFunc(initialStatus)
+
+        assertThat(actualStatus, equalTo(expectedStatus))
+    }
+
     private val sampleMotionDetectedSignal = MotionDetected(1, 2)
 
     private val sampleUpdatedStatus = Status(
@@ -26,6 +38,21 @@ class StatusUpdaterTest {
                 1,
                 listOf(MainCorridor(1, true, true)),
                 listOf(SubCorridor(1, false, true), SubCorridor(2, true, true))
+            ),
+            Floor(
+                2,
+                listOf(MainCorridor(1, true, true)),
+                listOf(SubCorridor(1, false, true), SubCorridor(2, false, true))
+            )
+        )
+    )
+
+    val sampleBudgetedStatus = Status(
+        listOf(
+            Floor(
+                1,
+                listOf(MainCorridor(1, true, true)),
+                listOf(SubCorridor(1, false, false), SubCorridor(2, true, true))
             ),
             Floor(
                 2,
