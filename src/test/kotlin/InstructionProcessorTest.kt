@@ -2,9 +2,9 @@ import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import org.junit.jupiter.api.Test
 
-class StatusUpdaterTest {
+class InstructionProcessorTest {
 
-    val statusUpdater = DefaultStatusUpdater()
+    val statusUpdater = DefaultInstructionProcessor()
 
     @Test
     internal fun `should turn on lights in sub corridor when motion is detected`() {

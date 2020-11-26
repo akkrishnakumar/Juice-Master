@@ -1,6 +1,6 @@
-typealias StatusUpdater = (Instruction) -> (Status) -> Status
+typealias InstructionProcessor = (Instruction) -> (Status) -> Status
 
-class DefaultStatusUpdater : StatusUpdater {
+class DefaultInstructionProcessor : InstructionProcessor {
 
     override fun invoke(instruction: Instruction): (Status) -> Status = when (instruction) {
         is MotionDetected -> updateStatusOnMotion(instruction)
@@ -8,6 +8,7 @@ class DefaultStatusUpdater : StatusUpdater {
 
     private fun updateStatusOnMotion(signal: MotionDetected): (Status) -> Status = { oldStatus ->
         oldStatus.copy(floors = oldStatus.floors.map { it.updateFloorUsing(signal) })
+            .apply { budgeting(signal) }
     }
 
     private fun Floor.updateFloorUsing(signal: MotionDetected): Floor =
@@ -19,4 +20,6 @@ class DefaultStatusUpdater : StatusUpdater {
     private fun List<SubCorridor>.updateSubCorridorUsing(signal: MotionDetected): List<SubCorridor> = map {
         if (it.number == signal.number) it.copy(light = true) else it
     }
+
+    private fun Status.budgeting(signal: MotionDetected): Status = TODO("Need to implement budgeter")
 }
