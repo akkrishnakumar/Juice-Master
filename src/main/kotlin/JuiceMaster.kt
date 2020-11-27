@@ -63,7 +63,7 @@ class JuiceMaster(
     private fun setNoMotionTimer(signal: Signal) {
         val timer = Timer("Floor ${signal.floor}", false)
         val task = timerTask {
-            instructionProcessor(NoMotionDetected(signal.floor, signal.number, status))
+            status = instructionProcessor(NoMotionDetected(signal.floor, signal.number, status))
             cancel()
             timer.cancel()
         }

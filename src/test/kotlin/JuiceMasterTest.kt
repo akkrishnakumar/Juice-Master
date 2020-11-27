@@ -47,7 +47,7 @@ class JuiceMasterTest {
     }
 
     @Test
-    internal fun `should switch off light and turn on ACs (after budgeting) in sub corridor when no motion after a min`() {
+    internal fun `should switch off light and turn on ACs in sub corridor when no motion after a min`() {
         val expectedStatus = sampleStatusWhenNoMotionDetected
 
         juiceMaster.consume(sampleMotionSignal)
@@ -58,7 +58,7 @@ class JuiceMasterTest {
         assertThat(actualStatus, equalTo(expectedStatus))
     }
 
-    private fun simulateWaitingForAMinute() = Thread.sleep(noMotionTimeout)
+    private fun simulateWaitingForAMinute() = Thread.sleep(noMotionTimeout + 50)
 
     val sampleDefaultStatusAtNightShift = """
         Floor 1
