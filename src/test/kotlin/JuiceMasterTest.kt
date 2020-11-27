@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test
 
 class JuiceMasterTest {
 
+    val noMotionTimeout: Long = 100
     val isNightShift: NightShift = { true }
     val juiceMaster = JuiceMaster(2, 1, 2, isNightShift = isNightShift)
 
@@ -39,6 +40,20 @@ class JuiceMasterTest {
         assertThat(actualStatus, equalTo(expectedStatus))
     }
 
+    @Test
+    internal fun `should switch off light and turn on ACs (after budgeting) in sub corridor when no motion after a min`() {
+        val expectedStatus = sampleStatusWhenNoMotionDetected
+
+        juiceMaster.consume(sampleMotionSignal)
+        simulateWaitingForAMinute()
+
+        val actualStatus = juiceMaster.status()
+
+        assertThat(actualStatus, equalTo(expectedStatus))
+    }
+
+    private fun simulateWaitingForAMinute() = Thread.sleep(noMotionTimeout)
+
     val sampleDefaultStatusAtNightShift = """
         Floor 1
         Main corridor 1 Light 1 : ON AC : ON
@@ -66,6 +81,17 @@ class JuiceMasterTest {
         Main corridor 1 Light 1 : ON AC : ON
         Sub corridor 1 Light 1 : OFF AC : OFF
         Sub corridor 2 Light 2 : ON AC : ON
+        Floor 2
+        Main corridor 1 Light 1 : ON AC : ON
+        Sub corridor 1 Light 1 : OFF AC : ON
+        Sub corridor 2 Light 2 : OFF AC : ON
+    """.trimIndent()
+
+    val sampleStatusWhenNoMotionDetected = """
+        Floor 1
+        Main corridor 1 Light 1 : ON AC : ON
+        Sub corridor 1 Light 1 : OFF AC : ON
+        Sub corridor 2 Light 2 : OFF AC : ON
         Floor 2
         Main corridor 1 Light 1 : ON AC : ON
         Sub corridor 1 Light 1 : OFF AC : ON
