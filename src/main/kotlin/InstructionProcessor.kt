@@ -4,8 +4,13 @@ class DefaultInstructionProcessor : InstructionProcessor {
 
     override fun invoke(instruction: Instruction): Status = when (instruction) {
         is MotionDetected -> updateStatusOnMotion(instruction)
-        is NoMotionDetected -> TODO("Need to implement No motion detected")
+        is NoMotionDetected -> updateStatusOnNoMotion(instruction)
     }
+
+    private fun updateStatusOnNoMotion(instruction: NoMotionDetected) =
+        instruction.status.copy(floors = instruction.status.floors.map {
+            if (it.number == instruction.floor) it.turnOffLightTurnOnACs() else it
+        })
 
     private fun updateStatusOnMotion(signal: MotionDetected): Status =
         signal.status.copy(floors = signal.status.floors.map { it.updateFloorUsing(signal) })
@@ -43,5 +48,9 @@ class DefaultInstructionProcessor : InstructionProcessor {
     private fun unitsForLights(switch: Boolean) = if (switch) 5 else 0
 
     private fun unitsForAC(switch: Boolean) = if (switch) 10 else 0
+
+    private fun Floor.turnOffLightTurnOnACs(): Floor =
+        copy(subCorridors = subCorridors.map { it.copy(light = false, ac = true) })
+
 }
 
