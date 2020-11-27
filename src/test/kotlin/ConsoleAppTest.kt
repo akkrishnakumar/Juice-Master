@@ -12,7 +12,8 @@ class ConsoleAppTest {
 
     private val consoleApp = DefaultConsoleApp(
         outputStream = ::consoleOutputStream,
-        isNightShift = { true }
+        isNightShift = { true },
+        noMotionTimeout = noMotionTimeout
     )
 
     @Test
@@ -52,7 +53,7 @@ class ConsoleAppTest {
         assertThat(actualStatus, equalTo(expectedStatus))
     }
 
-    private fun simulateWaitingForAMinute() = sleep(noMotionTimeout)
+    private fun simulateWaitingForAMinute() = sleep(noMotionTimeout + 50)
 
     val defaultStatus = """
         Floor 1

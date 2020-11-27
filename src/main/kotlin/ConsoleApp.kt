@@ -4,14 +4,16 @@ sealed class ConsoleApp(val outputStream: (String) -> Unit) {
 
 class DefaultConsoleApp(
     outputStream: (String) -> Unit = ::consoleOutputStream,
-    val isNightShift: NightShift = DefaultNightShift()
+    val isNightShift: NightShift = DefaultNightShift(),
+    noMotionTimeout: Long
 ) : ConsoleApp(outputStream) {
 
     val juiceMaster = JuiceMaster(
         2,
         1,
         2,
-        isNightShift = isNightShift
+        isNightShift = isNightShift,
+        noMotionTimeout = noMotionTimeout
     )
 
     fun status() = printOutput(juiceMaster.status())
