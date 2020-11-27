@@ -27,7 +27,10 @@ class ConsoleAppTest {
     internal fun `Juice Master will receive motion sensor signal and turn on light accordingly`() {
         val expectedStatus = statusAfterMotionDetected
 
-        val actualStatus = consoleApp.consume(sampleMotionSignal)
+        consoleApp.consume(sampleMotionSignal)
+        consoleApp.status()
+
+        val actualStatus = consoleQueue[0]
 
         assertThat(actualStatus, equalTo(expectedStatus))
     }
