@@ -5,7 +5,8 @@ class JuiceMaster(
     val mainCorridorsPerFloor: Int,
     val subCorridorsPerFloor: Int,
     val isNightShift: NightShift = DefaultNightShift(),
-    val signalInterpreter: SignalInterpreter = DefaultSignalInterpreter()
+    val signalInterpreter: SignalInterpreter = DefaultSignalInterpreter(),
+    val instructionProcessor: InstructionProcessor = DefaultInstructionProcessor()
 ) {
 
     private var status = initialize()
@@ -39,7 +40,11 @@ class JuiceMaster(
 
     fun consume(signal: String): Unit {
         signalInterpreter(signal)
-        TODO("Need to implement status updater")
+            .map { it.processSignal() }
+    }
+
+    private fun Signal.processSignal() {
+        status = instructionProcessor(MotionDetected(floor, number, status))
     }
 
 }
