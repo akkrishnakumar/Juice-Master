@@ -22,4 +22,5 @@ class DefaultConsoleApp(
 
 }
 
-fun consoleOutputStream(output: String) = println(output)
+fun consoleOutputStream(output: String) =
+    println("***********************************************************\n$output\n***********************************************************")
