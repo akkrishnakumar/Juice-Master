@@ -4,6 +4,7 @@ class DefaultInstructionProcessor : InstructionProcessor {
 
     override fun invoke(instruction: Instruction): Status = when (instruction) {
         is MotionDetected -> updateStatusOnMotion(instruction)
+        is NoMotionDetected -> TODO("Need to implement No motion detected")
     }
 
     private fun updateStatusOnMotion(signal: MotionDetected): Status =

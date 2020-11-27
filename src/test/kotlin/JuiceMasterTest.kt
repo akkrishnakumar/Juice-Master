@@ -6,7 +6,13 @@ class JuiceMasterTest {
 
     val noMotionTimeout: Long = 100
     val isNightShift: NightShift = { true }
-    val juiceMaster = JuiceMaster(2, 1, 2, isNightShift = isNightShift)
+    val juiceMaster = JuiceMaster(
+        floors = 2,
+        mainCorridorsPerFloor = 1,
+        subCorridorsPerFloor = 2,
+        isNightShift = isNightShift,
+        noMotionTimeout = noMotionTimeout
+    )
 
     @Test
     internal fun `should switch on all main corridor light during night shift`() {

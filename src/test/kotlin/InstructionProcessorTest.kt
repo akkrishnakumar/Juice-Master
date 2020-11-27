@@ -29,6 +29,17 @@ class InstructionProcessorTest {
         assertThat(actualStatus, equalTo(expectedStatus))
     }
 
+    @Test
+    internal fun `should turn off all sub corridor lights and turn on after no motion for a minute`() {
+        val expectedStatus = sampleNoMotionDetectedStatus
+        val initialStatus = sampleBudgetedStatus
+        val inputSignal = NoMotionDetected(1, 2, initialStatus)
+
+        val actualStatus = statusUpdater(inputSignal)
+
+        assertThat(actualStatus, equalTo(expectedStatus))
+    }
+
     private val sampleUpdatedStatus = Status(
         listOf(
             Floor(
@@ -50,6 +61,21 @@ class InstructionProcessorTest {
                 1,
                 listOf(MainCorridor(1, true, true)),
                 listOf(SubCorridor(1, false, false), SubCorridor(2, true, true))
+            ),
+            Floor(
+                2,
+                listOf(MainCorridor(1, true, true)),
+                listOf(SubCorridor(1, false, true), SubCorridor(2, false, true))
+            )
+        )
+    )
+
+    private val sampleNoMotionDetectedStatus = Status(
+        listOf(
+            Floor(
+                1,
+                listOf(MainCorridor(1, true, true)),
+                listOf(SubCorridor(1, false, true), SubCorridor(2, false, true))
             ),
             Floor(
                 2,
