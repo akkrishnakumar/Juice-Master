@@ -8,3 +8,8 @@ fun <T, R> Result<Error, T>.map(transform: (T) -> R): Result<Error, R> = when (t
     is Success -> Success(transform(value))
     is Failure -> Failure(err)
 }
+
+fun <T> Result<Error, T>.orElse(transform: (Error) -> T): T = when (this) {
+    is Success -> value
+    is Failure -> transform(err)
+}

@@ -38,13 +38,17 @@ class JuiceMaster(
             SubCorridor(it, light = false, ac = true)
         }
 
-    fun consume(signal: String): Unit {
-        signalInterpreter(signal)
-            .map { it.processSignal() }
-    }
+    fun consume(signal: String) = signalInterpreter(signal)
+        .map { it.processSignal() }
+        .orElse { it.handleError() }
 
     private fun Signal.processSignal() {
         status = instructionProcessor(MotionDetected(floor, number, status))
+    }
+
+    private fun Error.handleError() = when (this) {
+        InvalidSignalInput -> Unit // Do your side effecting logs here.
+        else               -> Unit
     }
 
 }
